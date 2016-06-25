@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Closed on 6/25/2016
+ * Created by Closed on 25.06.2016.
  */
 @WebServlet("/withdraw")
 public class WithdrawController extends HttpServlet {

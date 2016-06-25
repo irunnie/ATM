@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Closed on 6/25/2016
+ * Created by Closed on 25.06.2016.
  */
+
 public class AtmCalculator {
 
     private Map<Integer, Integer> bank = new HashMap<Integer, Integer>();
@@ -31,5 +32,17 @@ public class AtmCalculator {
             sum += entry.getKey() * entry.getValue();
         }
         return sum;
+    }
+
+    public void deposit(int amount){
+
+    }
+
+    public boolean checkDenomination(int denomination){
+        if(bank.containsKey(denomination)){
+            int value = bank.get(denomination);
+            return value < 20;
+        }
+        return false; // ???
     }
 }
