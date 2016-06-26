@@ -39,11 +39,31 @@ public class AtmCalculatorTest {
         };
     }
 
+    @DataProvider
+    public static Object[][] depositDataProvider() {
+        return new Object[][] {
+                {500, AVAILABLE, newHashMap(prepareEmptyAtm()), of(20, 0, 50, 0, 100, 0, 200, 0, 500, 1)},
+                {200, AVAILABLE, newHashMap(prepareEmptyAtm()), of(20, 0, 50, 0, 100, 0, 200, 1, 500, 0)},
+                {100, AVAILABLE, newHashMap(prepareEmptyAtm()), of(20, 0, 50, 0, 100, 1, 200, 0, 500, 0)},
+                {50, AVAILABLE, newHashMap(prepareEmptyAtm()), of(20, 0, 50, 1, 100, 0, 200, 0, 500, 0)},
+                {20, AVAILABLE, newHashMap(prepareEmptyAtm()), of(20, 1, 50, 0, 100, 0, 200, 0, 500, 0)},
+                {500, BANKNOTES_OVERLOW, newHashMap(prepareFullAtm()), of(20, 20, 50, 20, 100, 20, 200, 20, 500, 20)}
+        };
+    }
+
     @Test
     @UseDataProvider("withdrawDataProvider")
     public void testWithdraw(int withdrawAmount, Status expectedStatus, Map<Integer, Integer> initAtm, Map<Integer, Integer> expectedAtm) {
         calculator.setAtm(initAtm);
         assertEquals(expectedStatus, calculator.withdraw(withdrawAmount));
+        assertEquals(expectedAtm, calculator.getAtm());
+    }
+
+    @Test
+    @UseDataProvider("depositDataProvider")
+    public void testDeposit(int denomination, Status expectedStatus, Map<Integer, Integer> initAtm, Map<Integer, Integer> expectedAtm){
+        calculator.setAtm(initAtm);
+        assertEquals(expectedStatus, calculator.deposit(denomination));
         assertEquals(expectedAtm, calculator.getAtm());
     }
 

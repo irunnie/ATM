@@ -14,6 +14,7 @@ import static com.kohanevich.service.Status.*;
 public class AtmCalculator implements Calculator {
 
     private static final Integer MAX_COUNT_BANKNOTES = 10;
+    private static final Integer MAX_CAPACITY_BANKNOTES = 20;
     private Map<Integer, Integer> atm = new HashMap<>();
 
     public AtmCalculator() {
@@ -45,15 +46,7 @@ public class AtmCalculator implements Calculator {
         }
 
         int remain = requestedAmount;
-       /* atm.keySet().stream().sorted((i1, i2) -> i2.compareTo(i1)).forEach(i -> {
-            for () {
-                if (remain > i) {
-                    int countToWithdraw = remain / i;
-                    int remain = remain % i;
-                    atm.put(i, atm.get(i) - countToWithdraw);
-                }
-            }
-        });*/
+
         int totalBanknotes = 0;
         HashMap<Integer, Integer> map = Maps.newHashMap();
         Collections.reverse(denominations);
@@ -95,8 +88,18 @@ public class AtmCalculator implements Calculator {
     }
 
     @Override
-    public void deposit(int amount) {
-        //TODO
+    public Status deposit(int denomination) {
+        if (checkOverflow(denomination)){
+            atm.put(denomination, atm.get(denomination) + 1);
+            return Status.AVAILABLE;
+        }
+        else {
+            return Status.BANKNOTES_OVERLOW;
+        }
+    }
+
+    private boolean checkOverflow(int denomination){
+        return atm.get(denomination) < MAX_CAPACITY_BANKNOTES;
     }
 
     public Map<Integer, Integer> getAtm() {
@@ -109,7 +112,7 @@ public class AtmCalculator implements Calculator {
 }
 
 enum Status {
-    AVAILABLE, AVAILABLE_ONLY, EMPTY_ATM;
+    AVAILABLE, AVAILABLE_ONLY, EMPTY_ATM, BANKNOTES_OVERLOW;
     public int amount;
 
     public static Status build(Status status, int amount) {
