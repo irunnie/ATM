@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Closed on 25.06.2016.
+ * Created by Denis on 6/25/2016
  */
 @WebServlet("/withdraw")
 public class WithdrawController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("pages/withdraw.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/pages/withdraw.jsp");
         dispatcher.forward(req, resp);
     }
 
