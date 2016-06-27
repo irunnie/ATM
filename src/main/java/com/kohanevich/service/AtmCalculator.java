@@ -16,10 +16,11 @@ public class AtmCalculator implements Calculator {
     private static final Integer MAX_COUNT_BANKNOTES = 10;
     private static final Integer MAX_CAPACITY_BANKNOTES = 20;
     private Map<Integer, Integer> atm = new HashMap<>();
+    public static final AtmCalculator INSTANCE = new AtmCalculator();
 
     public AtmCalculator() {
         Properties properties = new Properties();
-        try (FileInputStream fileInputStream = new FileInputStream("src/main/resources/config.properties"))
+        try (FileInputStream fileInputStream = new FileInputStream("c:/users/closed/ideaprojects/atm.app/src/main/resources/config.properties"))
         {
             properties.load(fileInputStream);
         } catch (IOException e) {
@@ -111,12 +112,3 @@ public class AtmCalculator implements Calculator {
     }
 }
 
-enum Status {
-    AVAILABLE, AVAILABLE_ONLY, EMPTY_ATM, BANKNOTES_OVERFLOW;
-    public int amount;
-
-    public static Status build(Status status, int amount) {
-        status.amount = amount;
-        return status;
-    }
-}
