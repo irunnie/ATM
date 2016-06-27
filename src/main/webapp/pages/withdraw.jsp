@@ -21,7 +21,7 @@
         <br>
         <br>
         <button type="button" onclick="history.back()">
-            <b>Previous page</b>
+            <b>Main page</b>
         </button>
     </p>
 </form>
