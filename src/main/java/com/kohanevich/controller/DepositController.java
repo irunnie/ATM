@@ -9,19 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Closed on 6/25/2016
+ * Created by Closed on 27.06.2016.
  */
-@WebServlet("/withdraw")
-public class WithdrawController extends HttpServlet {
 
+@WebServlet("/deposit")
+public class DepositController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/pages/withdraw.jsp");
-        dispatcher.forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //super.doPost(req, resp);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/pages/deposit.jsp");
+        requestDispatcher.forward(req, resp);
     }
 }

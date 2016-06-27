@@ -89,16 +89,16 @@ public class AtmCalculator implements Calculator {
 
     @Override
     public Status deposit(int denomination) {
-        if (checkOverflow(denomination)){
+        if (checkBanknotesOverflow(denomination)){
             atm.put(denomination, atm.get(denomination) + 1);
             return Status.AVAILABLE;
         }
         else {
-            return Status.BANKNOTES_OVERLOW;
+            return Status.BANKNOTES_OVERFLOW;
         }
     }
 
-    private boolean checkOverflow(int denomination){
+    private boolean checkBanknotesOverflow(int denomination){
         return atm.get(denomination) < MAX_CAPACITY_BANKNOTES;
     }
 
@@ -112,7 +112,7 @@ public class AtmCalculator implements Calculator {
 }
 
 enum Status {
-    AVAILABLE, AVAILABLE_ONLY, EMPTY_ATM, BANKNOTES_OVERLOW;
+    AVAILABLE, AVAILABLE_ONLY, EMPTY_ATM, BANKNOTES_OVERFLOW;
     public int amount;
 
     public static Status build(Status status, int amount) {
