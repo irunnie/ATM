@@ -29,12 +29,8 @@ public class WithdrawController extends HttpServlet {
         int withdrawAmount;
         AtmCalculator atmCalculator = AtmCalculator.INSTANCE;
 
-        if(req.getParameter("withdrawAmount") == null){
-            int availableAmount = Integer.parseInt(req.getParameter("hiddenValue"));
-            atmCalculator.withdraw(availableAmount);
-            req.getRequestDispatcher("/pages/successpage.jsp").forward(req, resp);
-        }
-        else {
+        if(req.getParameter("withdrawAmount") != null){
+
             withdrawAmount = Integer.parseInt(req.getParameter("withdrawAmount"));
 
             if (atmCalculator.withdraw(withdrawAmount) == Status.AVAILABLE) {
@@ -46,6 +42,11 @@ public class WithdrawController extends HttpServlet {
             } else if (atmCalculator.withdraw(withdrawAmount) == Status.EMPTY_ATM) {
                 req.getRequestDispatcher("/pages/emptyatm.jsp").forward(req, resp);
             }
+        }
+        else {
+            int availableAmount = Integer.parseInt(req.getParameter("hiddenValue"));
+            atmCalculator.withdraw(availableAmount);
+            req.getRequestDispatcher("/pages/successpage.jsp").forward(req, resp);
         }
     }
 }
