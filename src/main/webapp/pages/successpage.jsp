@@ -5,8 +5,11 @@
 </head>
 <body>
 <h1 align="center">Money was successfully withdrawn</h1>
-<p align="center"><button type="button" onclick="history.back()">
-  <b>Previous page</b>
+
+<form action="withdraw">
+<p align="center"><button type="submit">
+  <b>Withdraw page</b>
 </button></p>
+    </form>
 </body>
 </html>
