@@ -2,7 +2,6 @@ package com.kohanevich.service;
 
 import com.google.common.collect.Maps;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -20,9 +19,9 @@ public class AtmCalculator implements Calculator {
 
     public AtmCalculator() {
         Properties properties = new Properties();
-        try (FileInputStream fileInputStream = new FileInputStream("c:/users/closed/ideaprojects/atm.app/src/main/resources/config.properties"))
+        try
         {
-            properties.load(fileInputStream);
+            properties.load(AtmCalculator.class.getResourceAsStream("/config.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }

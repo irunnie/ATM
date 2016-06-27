@@ -11,6 +11,7 @@
     <name>atm.app Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
+
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -24,6 +25,7 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+
 
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -44,6 +46,8 @@
             <version>1.10.0</version>
             <scope>test</scope>
         </dependency>
+
+
 
     </dependencies>
     <build>
