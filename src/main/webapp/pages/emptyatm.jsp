@@ -5,8 +5,11 @@
 </head>
 <body>
 <h1 align="center">Sorry, ATM is currently empty</h1>
-<p align="center"><button type="button" onclick="history.back()">
-  <b>Previous page</b>
-</button></p>
+
+<form action="withdraw" method="get">
+<p align="center">
+    <input type="submit" value="Withdraw page"/>
+</p>
+    </form>
 </body>
 </html>

@@ -6,10 +6,10 @@
 <body>
 <h1 align="center">Money was successfully withdrawn</h1>
 
-<form action="withdraw">
-<p align="center"><button type="submit">
-  <b>Withdraw page</b>
-</button></p>
+<form action="withdraw" method="get">
+<p align="center">
+    <input type="submit" value="Withdraw page"/>
     </form>
+</p>
 </body>
 </html>

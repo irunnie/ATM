@@ -26,27 +26,25 @@ public class WithdrawController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        int withdrawAmount;
         AtmCalculator atmCalculator = AtmCalculator.INSTANCE;
 
-        if(req.getParameter("withdrawAmount") != null){
+        int withdrawAmount = Integer.parseInt(req.getParameter("withdrawAmount"));
+        Status currentStatus = atmCalculator.withdraw(withdrawAmount);
 
-            withdrawAmount = Integer.parseInt(req.getParameter("withdrawAmount"));
-
-            if (atmCalculator.withdraw(withdrawAmount) == Status.AVAILABLE) {
-                req.getRequestDispatcher("/pages/successpage.jsp").forward(req, resp);
-            } else if (atmCalculator.withdraw(withdrawAmount) == Status.AVAILABLE_ONLY) {
-                int availableAmount = atmCalculator.withdraw(withdrawAmount).amount;
-                req.setAttribute("availableAmount", availableAmount);
-                req.getRequestDispatcher("/pages/available.jsp").forward(req, resp);
-            } else if (atmCalculator.withdraw(withdrawAmount) == Status.EMPTY_ATM) {
-                req.getRequestDispatcher("/pages/emptyatm.jsp").forward(req, resp);
-            }
-        }
-        else {
-            int availableAmount = Integer.parseInt(req.getParameter("hiddenValue"));
-            atmCalculator.withdraw(availableAmount);
+        if(currentStatus == Status.AVAILABLE){
             req.getRequestDispatcher("/pages/successpage.jsp").forward(req, resp);
         }
+        else if (currentStatus == Status.AVAILABLE_ONLY){
+            int availableAmount = currentStatus.amount;
+            req.setAttribute("availableAmount", availableAmount);
+            req.getRequestDispatcher("/pages/available.jsp").forward(req, resp);
+        }
+        else if (atmCalculator.withdraw(withdrawAmount) == Status.EMPTY_ATM){
+            req.getRequestDispatcher("/pages/emptyatm.jsp").forward(req, resp);
+        }
+
     }
+
 }
+
+

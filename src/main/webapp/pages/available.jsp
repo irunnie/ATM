@@ -11,7 +11,7 @@
 
 <form action="withdraw" method="post">
 <p align="center">
-    <input name="hiddenValue" type="hidden" value="<%= request.getAttribute("availableAmount")%>"/>
+    <input name="withdrawAmount" type="hidden" value="<%= request.getAttribute("availableAmount")%>"/>
 <button type="submit">OK</button>
 <button type="button" onclick="history.back()">Cancel</button>
     </p>

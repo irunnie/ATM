@@ -12,21 +12,46 @@ import static com.kohanevich.service.Status.*;
  */
 public class AtmCalculator implements Calculator {
 
-    private static final Integer MAX_COUNT_BANKNOTES = 10;
-    private static final Integer MAX_CAPACITY_BANKNOTES = 20;
+    private static final Integer MAX_COUNT_BANKNOTES = getCount();
+    private static final Integer MAX_CAPACITY_BANKNOTES = getCapacity();
+    private static Properties banknotes;
     private Map<Integer, Integer> atm = new HashMap<>();
     public static final AtmCalculator INSTANCE = new AtmCalculator();
+    private Integer count;
 
-    public AtmCalculator() {
-        Properties properties = new Properties();
-        try
-        {
-            properties.load(AtmCalculator.class.getResourceAsStream("/config.properties"));
+
+    private static Integer getCount() {
+        banknotes = new Properties();
+        try {
+            banknotes.load(AtmCalculator.class.getResourceAsStream("/capacity-count.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+        return Integer.parseInt(banknotes.getProperty("MAX_COUNT_BANKNOTES"));
+    }
+
+    private static Integer getCapacity() {
+        banknotes = new Properties();
+        try {
+            banknotes.load(AtmCalculator.class.getResourceAsStream("/capacity-count.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Integer.parseInt(banknotes.getProperty("MAX_CAPACITY_BANKNOTES"));
+    }
+
+    public AtmCalculator() {
+        Properties initialization = new Properties();
+        try
+        {
+            initialization.load(AtmCalculator.class.getResourceAsStream("/denomination-amount.properties"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (Map.Entry<Object, Object> entry : initialization.entrySet()) {
             String key = (String) entry.getKey();
             String value = (String) entry.getValue();
             atm.put(Integer.parseInt(key), Integer.parseInt(value));
@@ -109,5 +134,6 @@ public class AtmCalculator implements Calculator {
     public void setAtm(Map<Integer, Integer> atm) {
         this.atm = atm;
     }
+
 }
 

@@ -39,6 +39,7 @@ public class AtmCalculatorTest {
         };
     }
 
+
     @DataProvider
     public static Object[][] depositDataProvider() {
         return new Object[][] {
