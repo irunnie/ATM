@@ -1,6 +1,7 @@
 package com.kohanevich.service;
 
 import com.google.common.collect.Maps;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.*;
@@ -11,12 +12,14 @@ import static com.kohanevich.service.Status.*;
 
 public class AtmCalculator implements Calculator {
 
+    public static Logger log = Logger.getLogger(AtmCalculator.class);
     private static final Integer MAX_COUNT_BANKNOTES = getCount();
     private static final Integer MAX_CAPACITY_BANKNOTES = getCapacity();
     private static Properties banknotes;
-//    private Map<Integer, Integer> atm = new HashMap<>();
     private ConcurrentHashMap<Integer, Integer> atm = new ConcurrentHashMap<>();
     public static final AtmCalculator INSTANCE = new AtmCalculator();
+    public int log4denomination;
+    public int log4count;
 
 
     private static Integer getCount() {
@@ -84,11 +87,15 @@ public class AtmCalculator implements Calculator {
                 if (totalBanknotes + currentBanknotes <= MAX_COUNT_BANKNOTES) {
                     totalBanknotes += currentBanknotes;
                     remain = remain % denomination;
+                    log4denomination = denomination;
+                    log4count = currentBanknotes;
                     map.put(denomination, currentBanknotes);
                 } else {
                     int availableCount = MAX_COUNT_BANKNOTES - totalBanknotes;
                     totalBanknotes += availableCount;
                     remain -= denomination * availableCount;
+                    log4denomination = denomination;
+                    log4count = availableCount;
                     map.put(denomination, availableCount);
                 }
             }
