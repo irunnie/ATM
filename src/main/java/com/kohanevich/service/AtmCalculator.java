@@ -4,20 +4,19 @@ import com.google.common.collect.Maps;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.kohanevich.service.Status.*;
 
-/**
- * Created by Closed on 6/25/2016
- */
+
 public class AtmCalculator implements Calculator {
 
     private static final Integer MAX_COUNT_BANKNOTES = getCount();
     private static final Integer MAX_CAPACITY_BANKNOTES = getCapacity();
     private static Properties banknotes;
-    private Map<Integer, Integer> atm = new HashMap<>();
+//    private Map<Integer, Integer> atm = new HashMap<>();
+    private ConcurrentHashMap<Integer, Integer> atm = new ConcurrentHashMap<>();
     public static final AtmCalculator INSTANCE = new AtmCalculator();
-    private Integer count;
 
 
     private static Integer getCount() {
@@ -58,7 +57,7 @@ public class AtmCalculator implements Calculator {
         }
     }
 
-    public AtmCalculator(Map<Integer, Integer> atm) {
+    public AtmCalculator(ConcurrentHashMap<Integer, Integer> atm) {
         this.atm = atm;
     }
 
@@ -131,7 +130,7 @@ public class AtmCalculator implements Calculator {
         return atm;
     }
 
-    public void setAtm(Map<Integer, Integer> atm) {
+    public void setAtm(ConcurrentHashMap<Integer, Integer> atm) {
         this.atm = atm;
     }
 

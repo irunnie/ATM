@@ -4,12 +4,12 @@
     <title>Success</title>
 </head>
 <body>
-<h1 align="center">Money was successfully withdrawn</h1>
+<h1 align="center">Money has been added</h1>
 
-<form action="withdraw" method="get">
 <p align="center">
-    <input type="submit" value="Withdraw page"/>
-    </form>
+  <a href="../index.jsp">
+    <button>Main page</button>
+  </a>
 </p>
 </body>
 </html>

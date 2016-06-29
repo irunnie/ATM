@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by Closed on 6/25/2016
- */
+
 @WebServlet("/withdraw")
 public class WithdrawController extends HttpServlet {
 
@@ -32,7 +30,7 @@ public class WithdrawController extends HttpServlet {
         Status currentStatus = atmCalculator.withdraw(withdrawAmount);
 
         if(currentStatus == Status.AVAILABLE){
-            req.getRequestDispatcher("/pages/successpage.jsp").forward(req, resp);
+            req.getRequestDispatcher("/pages/success_withdraw_page.jsp").forward(req, resp);
         }
         else if (currentStatus == Status.AVAILABLE_ONLY){
             int availableAmount = currentStatus.amount;
@@ -40,7 +38,7 @@ public class WithdrawController extends HttpServlet {
             req.getRequestDispatcher("/pages/available.jsp").forward(req, resp);
         }
         else if (atmCalculator.withdraw(withdrawAmount) == Status.EMPTY_ATM){
-            req.getRequestDispatcher("/pages/emptyatm.jsp").forward(req, resp);
+            req.getRequestDispatcher("/pages/empty_atm.jsp").forward(req, resp);
         }
 
     }

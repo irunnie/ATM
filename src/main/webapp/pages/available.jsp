@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Available amount</title>
@@ -13,8 +12,13 @@
 <p align="center">
     <input name="withdrawAmount" type="hidden" value="<%= request.getAttribute("availableAmount")%>"/>
 <button type="submit">OK</button>
-<button type="button" onclick="history.back()">Cancel</button>
     </p>
     </form>
+
+<form action="withdraw" method="get">
+    <p align="center">
+    <input type="submit" value="Withdraw page"/>
+</p>
+</form>
 </body>
 </html>
