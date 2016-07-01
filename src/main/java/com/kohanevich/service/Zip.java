@@ -13,7 +13,7 @@ public class Zip {
 
     List<String> fileList;
     public static final String OUTPUT_ZIP_FILE = "c:/log-archive.zip";
-    public static final String SOURCE_FOLDER = "c:/tomcat/bin/logs";
+    public static final String SOURCE_FOLDER = "c:/logs";
 
     public Zip(){
         fileList = new ArrayList<>();

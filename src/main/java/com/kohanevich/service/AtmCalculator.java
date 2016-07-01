@@ -17,9 +17,8 @@ public class AtmCalculator implements Calculator {
     private static final Integer MAX_CAPACITY_BANKNOTES = getCapacity();
     private static Properties banknotes;
     private ConcurrentHashMap<Integer, Integer> atm = new ConcurrentHashMap<>();
-    public static final AtmCalculator INSTANCE = new AtmCalculator();
-    public int log4denomination;
-    public int log4count;
+    private static volatile AtmCalculator instance;
+    public HashMap<Integer, Integer> map4logger;
 
 
     private static Integer getCount() {
@@ -43,6 +42,20 @@ public class AtmCalculator implements Calculator {
         return Integer.parseInt(banknotes.getProperty("MAX_CAPACITY_BANKNOTES"));
     }
 
+    public static AtmCalculator getInstance() {
+        AtmCalculator localInstance = instance;
+        if (localInstance == null)
+        {
+            synchronized (AtmCalculator.class){
+                localInstance = instance;
+                if (localInstance == null){
+                    instance = localInstance = new AtmCalculator();
+                }
+            }
+        }
+        return localInstance;
+
+    }
     public AtmCalculator() {
         Properties initialization = new Properties();
         try
@@ -78,7 +91,9 @@ public class AtmCalculator implements Calculator {
         HashMap<Integer, Integer> map = Maps.newHashMap();
         Collections.reverse(denominations);
 
+        map4logger = new HashMap<>();
         for (Integer denomination : denominations) {
+
             if (remain >= denomination && atm.get(denomination) != 0 && totalBanknotes < MAX_COUNT_BANKNOTES) {
                 int currentBanknotes = remain / denomination;
                 if (atm.get(denomination) < currentBanknotes) {
@@ -86,17 +101,15 @@ public class AtmCalculator implements Calculator {
                 }
                 if (totalBanknotes + currentBanknotes <= MAX_COUNT_BANKNOTES) {
                     totalBanknotes += currentBanknotes;
-                    remain = remain % denomination;
-                    log4denomination = denomination;
-                    log4count = currentBanknotes;
+                    remain -= currentBanknotes * denomination;
                     map.put(denomination, currentBanknotes);
+                    map4logger.put(denomination, currentBanknotes);
                 } else {
                     int availableCount = MAX_COUNT_BANKNOTES - totalBanknotes;
                     totalBanknotes += availableCount;
                     remain -= denomination * availableCount;
-                    log4denomination = denomination;
-                    log4count = availableCount;
                     map.put(denomination, availableCount);
+                    map4logger.put(denomination, availableCount);
                 }
             }
         }
@@ -133,7 +146,7 @@ public class AtmCalculator implements Calculator {
         return atm.get(denomination) < MAX_CAPACITY_BANKNOTES;
     }
 
-    public Map<Integer, Integer> getAtm() {
+    public ConcurrentHashMap<Integer, Integer> getAtm() {
         return atm;
     }
 

@@ -22,7 +22,7 @@ public class DepositController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        AtmCalculator atmCalculator = AtmCalculator.INSTANCE;
+        AtmCalculator atmCalculator = AtmCalculator.getInstance();
 
         int depositAmount = Integer.parseInt(req.getParameter("amount"));
 
@@ -33,7 +33,9 @@ public class DepositController extends HttpServlet {
         }
 
         else if (depositStatus == Status.AVAILABLE){
-            AtmCalculator.log.info("deposit " + depositAmount);
+            AtmCalculator.log.info("=============================================");
+            AtmCalculator.log.info("deposit amount = " + depositAmount + ";");
+            AtmCalculator.log.info("=============================================");
             req.getRequestDispatcher("/pages/success_deposit_page.jsp").forward(req, resp);
         }
 

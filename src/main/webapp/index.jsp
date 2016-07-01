@@ -10,6 +10,7 @@
 <a href="deposit"><button type="button" style="width:100px;height:75px;background:cornflowerblue;font-size: 9pt">
     <img src="deposit-button.png" alt="deposit" style="width:40px;height:40px"/><b>Deposit</b></button></a>
     <br>
+    <br>
 <a href="zip" download>
     <button>Download log-archive</button>
 </a>
