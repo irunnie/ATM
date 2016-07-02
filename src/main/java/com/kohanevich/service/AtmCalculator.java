@@ -16,7 +16,7 @@ public class AtmCalculator implements Calculator {
     private static final Integer MAX_COUNT_BANKNOTES = getCount();
     private static final Integer MAX_CAPACITY_BANKNOTES = getCapacity();
     private static Properties banknotes;
-    private ConcurrentHashMap<Integer, Integer> atm = new ConcurrentHashMap<>();
+    private Map<Integer, Integer> atm = new ConcurrentHashMap<>();
     private static volatile AtmCalculator instance;
     public HashMap<Integer, Integer> map4logger;
 
@@ -56,7 +56,7 @@ public class AtmCalculator implements Calculator {
         return localInstance;
 
     }
-    public AtmCalculator() {
+    private AtmCalculator() {
         Properties initialization = new Properties();
         try
         {
@@ -73,9 +73,6 @@ public class AtmCalculator implements Calculator {
         }
     }
 
-    public AtmCalculator(ConcurrentHashMap<Integer, Integer> atm) {
-        this.atm = atm;
-    }
 
     public Status withdraw(int requestedAmount) {
         List<Integer> denominations = new ArrayList<>(atm.keySet());
@@ -146,11 +143,11 @@ public class AtmCalculator implements Calculator {
         return atm.get(denomination) < MAX_CAPACITY_BANKNOTES;
     }
 
-    public ConcurrentHashMap<Integer, Integer> getAtm() {
+    public Map<Integer, Integer> getAtm() {
         return atm;
     }
 
-    public void setAtm(ConcurrentHashMap<Integer, Integer> atm) {
+    public void setAtm(Map<Integer, Integer> atm) {
         this.atm = atm;
     }
 

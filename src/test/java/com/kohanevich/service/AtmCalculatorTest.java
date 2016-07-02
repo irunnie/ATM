@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static com.google.common.collect.ImmutableMap.of;
 import static com.google.common.collect.Maps.newHashMap;
@@ -17,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(DataProviderRunner.class)
 public class AtmCalculatorTest {
 
-    private AtmCalculator calculator = new AtmCalculator();
+    private AtmCalculator calculator = AtmCalculator.getInstance();
 
     @DataProvider
     public static Object[][] withdrawDataProvider() {
@@ -55,7 +54,7 @@ public class AtmCalculatorTest {
 
     @Test
     @UseDataProvider("withdrawDataProvider")
-    public void testWithdraw(int withdrawAmount, Status expectedStatus, ConcurrentHashMap<Integer, Integer> initAtm, Map<Integer, Integer> expectedAtm) {
+    public void testWithdraw(int withdrawAmount, Status expectedStatus, Map<Integer, Integer> initAtm, Map<Integer, Integer> expectedAtm) {
         calculator.setAtm(initAtm);
         assertEquals(expectedStatus, calculator.withdraw(withdrawAmount));
         assertEquals(expectedAtm, calculator.getAtm());
@@ -63,7 +62,7 @@ public class AtmCalculatorTest {
 
     @Test
     @UseDataProvider("depositDataProvider")
-    public void testDeposit(int denomination, Status expectedStatus, ConcurrentHashMap<Integer, Integer> initAtm, Map<Integer, Integer> expectedAtm){
+    public void testDeposit(int denomination, Status expectedStatus, Map<Integer, Integer> initAtm, Map<Integer, Integer> expectedAtm){
         calculator.setAtm(initAtm);
         assertEquals(expectedStatus, calculator.deposit(denomination));
         assertEquals(expectedAtm, calculator.getAtm());
