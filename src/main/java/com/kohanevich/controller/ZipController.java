@@ -18,10 +18,10 @@ public class ZipController extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Zip zip = new Zip();
-        zip.generateFileList(new File(Zip.SOURCE_FOLDER));
-        zip.compress(Zip.OUTPUT_ZIP_FILE);
+        zip.generateFileList(new File(Zip.sourceFolder));
+        zip.compress(Zip.outputZipFile);
 
-        String filePath = "c:/log-archive.zip";
+        String filePath = Zip.outputZipFile;
         File downloadFile = new File(filePath);
         FileInputStream inputStream = new FileInputStream(downloadFile);
 

@@ -6,17 +6,41 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zip {
 
     List<String> fileList;
-    public static final String OUTPUT_ZIP_FILE = "c:/log-archive.zip";
-    public static final String SOURCE_FOLDER = "c:/logs";
+    public static String outputZipFile;
+    public static String sourceFolder;
+    private static Properties paths;
 
     public Zip(){
         fileList = new ArrayList<>();
+        outputZipFile = getOutputZipFile();
+        sourceFolder = getSourceFolder();
+    }
+
+    private static String getSourceFolder(){
+        paths = new Properties();
+        try {
+            paths.load(Zip.class.getResourceAsStream("/path.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return paths.getProperty("path-for-logs");
+    }
+
+    private static String getOutputZipFile(){
+        paths = new Properties();
+        try {
+            paths.load(Zip.class.getResourceAsStream("/path.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return paths.getProperty("path-for-zip");
     }
 
     public void compress(String zipFile){
@@ -29,7 +53,7 @@ public class Zip {
                 ZipEntry zipEntry = new ZipEntry(file);
                 zipOutputStream.putNextEntry(zipEntry);
 
-                FileInputStream in = new FileInputStream(SOURCE_FOLDER + File.separator + file);
+                FileInputStream in = new FileInputStream(sourceFolder + File.separator + file);
 
                 int length;
                 while ((length = in.read(buffer)) > 0){
@@ -58,6 +82,6 @@ public class Zip {
     }
 
     private String generateZipEntry(String file){
-        return file.substring(SOURCE_FOLDER.length()+1, file.length());
+        return file.substring(sourceFolder.length()+1, file.length());
     }
 }
