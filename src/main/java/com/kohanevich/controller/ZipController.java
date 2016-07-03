@@ -17,11 +17,12 @@ import java.io.OutputStream;
 public class ZipController extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Zip zip = new Zip();
-        zip.generateFileList(new File(Zip.sourceFolder));
-        zip.compress(Zip.outputZipFile);
 
-        String filePath = Zip.outputZipFile;
+        Zip zip = new Zip();
+        zip.generateFileList(new File(zip.sourceFolder));
+        zip.compress(zip.outputZipFile);
+
+        String filePath = zip.outputZipFile;
         File downloadFile = new File(filePath);
         FileInputStream inputStream = new FileInputStream(downloadFile);
 

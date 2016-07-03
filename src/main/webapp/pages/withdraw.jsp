@@ -2,17 +2,10 @@
 <html>
 <head>
     <title>Withdraw</title>
-    <script>
-        function empty_form()
-        {
-            var amount = document.getElementById('num').value;
-            return amount != '';
-        }
-    </script>
 </head>
 <body>
 <h2 align="center">Please, enter the required amount</h2>
-<form method="post" action="withdraw" onsubmit="return empty_form()">
+<form method="post" action="withdraw">
     <p align="center">
         <input name="withdrawAmount" id="num" type="number"/><br>
         <br>

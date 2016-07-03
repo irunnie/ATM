@@ -33,9 +33,6 @@ public class DepositController extends HttpServlet {
         }
 
         else if (depositStatus == Status.AVAILABLE){
-            AtmCalculator.log.info("=============================================");
-            AtmCalculator.log.info("deposit amount = " + depositAmount + ";");
-            AtmCalculator.log.info("=============================================");
             req.getRequestDispatcher("/pages/success_deposit_page.jsp").forward(req, resp);
         }
 

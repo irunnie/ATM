@@ -13,8 +13,8 @@ import java.util.zip.ZipOutputStream;
 public class Zip {
 
     List<String> fileList;
-    public static String outputZipFile;
-    public static String sourceFolder;
+    public String outputZipFile;
+    public String sourceFolder;
     private static Properties paths;
 
     public Zip(){
@@ -30,7 +30,7 @@ public class Zip {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return paths.getProperty("path-for-logs");
+        return paths.getProperty("path_for_logs");
     }
 
     private static String getOutputZipFile(){
@@ -40,7 +40,7 @@ public class Zip {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return paths.getProperty("path-for-zip");
+        return paths.getProperty("path_for_zip");
     }
 
     public void compress(String zipFile){

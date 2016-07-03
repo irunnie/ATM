@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 
 
 @WebServlet("/withdraw")
@@ -27,17 +26,11 @@ public class WithdrawController extends HttpServlet {
 
         AtmCalculator atmCalculator = AtmCalculator.getInstance();
 
-        int withdrawAmount = Integer.parseInt(req.getParameter("withdrawAmount"));
+        String amount = req.getParameter("withdrawAmount");
+        int withdrawAmount = amount.equals("") ? 0 : Integer.parseInt(amount);
         Status currentStatus = atmCalculator.withdraw(withdrawAmount);
 
         if(currentStatus == Status.AVAILABLE){
-            AtmCalculator.log.info("=============================================");
-            AtmCalculator.log.info("withdraw amount = " + withdrawAmount + ";");
-            for (Map.Entry<Integer, Integer> entry : atmCalculator.map4logger.entrySet()) {
-                AtmCalculator.log.info("denomination = " + entry.getKey() + "; "
-                        + "banknotes amount = " + entry.getValue() + ";");
-            }
-            AtmCalculator.log.info("=============================================");
             req.getRequestDispatcher("/pages/success_withdraw_page.jsp").forward(req, resp);
         }
         else if (currentStatus == Status.AVAILABLE_ONLY){

@@ -18,7 +18,6 @@ public class AtmCalculator implements Calculator {
     private static Properties banknotes;
     private Map<Integer, Integer> atm = new ConcurrentHashMap<>();
     private static volatile AtmCalculator instance;
-    public HashMap<Integer, Integer> map4logger;
 
 
     private static Integer getCount() {
@@ -88,7 +87,6 @@ public class AtmCalculator implements Calculator {
         HashMap<Integer, Integer> map = Maps.newHashMap();
         Collections.reverse(denominations);
 
-        map4logger = new HashMap<>();
         for (Integer denomination : denominations) {
 
             if (remain >= denomination && atm.get(denomination) != 0 && totalBanknotes < MAX_COUNT_BANKNOTES) {
@@ -100,13 +98,11 @@ public class AtmCalculator implements Calculator {
                     totalBanknotes += currentBanknotes;
                     remain -= currentBanknotes * denomination;
                     map.put(denomination, currentBanknotes);
-                    map4logger.put(denomination, currentBanknotes);
                 } else {
                     int availableCount = MAX_COUNT_BANKNOTES - totalBanknotes;
                     totalBanknotes += availableCount;
                     remain -= denomination * availableCount;
                     map.put(denomination, availableCount);
-                    map4logger.put(denomination, availableCount);
                 }
             }
         }
@@ -116,6 +112,10 @@ public class AtmCalculator implements Calculator {
         } else if (remain != 0) {
             return build(AVAILABLE_ONLY, requestedAmount - remain);
         } else {
+            log.info("withdraw amount = " + requestedAmount + ";");
+            map.forEach((key, value) -> log.info("denomination = " + key + "; "
+                                         + "banknotes amount = " + value + ";"));
+            log.info("=============================================");
             map.forEach((key,value) -> atm.put(key, atm.get(key) - value));
             return Status.AVAILABLE;
         }
@@ -131,6 +131,8 @@ public class AtmCalculator implements Calculator {
     @Override
     public Status deposit(int denomination) {
         if (checkBanknotesOverflow(denomination)){
+            log.info("deposit amount = " + denomination + ";");
+            log.info("=============================================");
             atm.put(denomination, atm.get(denomination) + 1);
             return Status.AVAILABLE;
         }
