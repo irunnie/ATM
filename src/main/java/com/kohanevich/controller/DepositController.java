@@ -33,7 +33,7 @@ public class DepositController extends HttpServlet {
         }
 
         else if (depositStatus == Status.AVAILABLE){
-            req.getRequestDispatcher("/pages/success_deposit_page.jsp").forward(req, resp);
+            req.getRequestDispatcher("/pages/success_page.jsp").forward(req, resp);
         }
 
     }

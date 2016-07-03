@@ -31,7 +31,7 @@ public class WithdrawController extends HttpServlet {
         Status currentStatus = atmCalculator.withdraw(withdrawAmount);
 
         if(currentStatus == Status.AVAILABLE){
-            req.getRequestDispatcher("/pages/success_withdraw_page.jsp").forward(req, resp);
+            req.getRequestDispatcher("/pages/success_page.jsp").forward(req, resp);
         }
         else if (currentStatus == Status.AVAILABLE_ONLY){
             int availableAmount = currentStatus.amount;
